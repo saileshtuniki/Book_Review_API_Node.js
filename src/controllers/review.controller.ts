@@ -1,7 +1,6 @@
-
 import { Request, Response } from 'express';
 import { createReviewInDB, updateReviewInDB , deleteReviewByIdFromDB} from '../models/review.model';
-
+import { AuthRequest} from '../interfaces/review.interfaces';
 
 export const createReview = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -23,7 +22,7 @@ export const createReview = async (req: Request, res: Response): Promise<void> =
        return
     }
 
-    // actually insert with a real user_id
+    //insert with a real user_id
     const review = await createReviewInDB({
       user_id: user.id,
       book_id,
@@ -39,11 +38,6 @@ export const createReview = async (req: Request, res: Response): Promise<void> =
      return
   }
 };
-
-
-
-
-
 
 export const updateReview = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -66,28 +60,24 @@ export const updateReview = async (req: Request, res: Response): Promise<void> =
     res.status(200).json({ message: 'Review updated', review: updated.rows[0] });
     return;
   } catch (err: any) {
-    console.error('updateReview error ▶', err);
+    console.error('updateReview error', err);
     res.status(500).json({ message: 'Something went wrong', error: err.message });
     return;
   }
 };
 
 
+// interface AuthRequest extends Request {
+//   user?: { id: number };
+// }
 
-
-// controllers/review.controller.ts
-
-
-
-
-interface AuthRequest extends Request {
-  user?: { id: number };
-}
-
-export const deleteReview = async (req: AuthRequest, res: Response): Promise<void> => {
+// export const deleteReview = async (req: AuthRequest, res: Response):Promise<void> => {
+export const deleteReview = async (req: Request<{id: string}>, res: Response):Promise<void> => {
+// export const deleteReview: RequestHandler<ReviewParams> = async(req, res) => {
   try {
     const reviewId = parseInt(req.params.id);
-    const userId = req.user?.id;
+    // const userId = req.user?.id;
+    const userId = (req as AuthRequest).user?.id;
 
     if (!userId) {
        res.status(401).json({ message: 'Unauthorized: User ID not found' });

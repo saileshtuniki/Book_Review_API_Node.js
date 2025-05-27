@@ -1,11 +1,5 @@
-
-
 import { RequestHandler  } from 'express';
 import jwt from 'jsonwebtoken';
-
-// interface AuthRequest extends Request {
-//   user?: {id: number};
-// }
 
 
 export const authMiddleware: RequestHandler = (req, res, next) => {
@@ -20,12 +14,7 @@ export const authMiddleware: RequestHandler = (req, res, next) => {
   const token = header.split(' ')[1];
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {id: number};
-    // attach to req in a type-safe way (see step 3)
-    // (req as AuthRequest).user = {id: decoded.userId};
     (req as any).user = decoded;
-    console.log('Decoded JWT payload ▶', decoded);
-
-    // req.user = decoded;
     next();
   } catch {
      res.status(401).json({ message: 'Unauthorized: Invalid token' });

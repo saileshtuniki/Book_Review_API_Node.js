@@ -14,7 +14,7 @@ export const createBook = async (req: Request, res: Response) => {
      res.status(201).json(book);
      return;
   } catch (err: any) {
-    console.error('createBook error ▶', err);
+    console.error('createBook error', err);
      res.status(500).json({ message: 'Failed to create book', error: err.message });
      return;
   }

@@ -1,11 +1,5 @@
-import db from '../config/db';
-
-interface Review {
-  user_id: number;
-  book_id: number;
-  rating: number;
-  comment: string;
-}
+import db from "../config/db";
+import { Review, ReviewUpdate } from "../interfaces/review.interfaces";
 
 export const createReviewInDB = async (review: Review) => {
   const { user_id, book_id, rating, comment } = review;
@@ -18,11 +12,6 @@ export const createReviewInDB = async (review: Review) => {
   const result = await db.query(query, values);
   return result.rows[0];
 };
-
-interface ReviewUpdate {
-  rating?: number;
-  comment?: string;
-}
 
 export const updateReviewInDB = async (
   reviewId: number,
@@ -43,7 +32,7 @@ export const updateReviewInDB = async (
     values.push(changes.comment);
   }
   if (sets.length === 0) {
-    throw new Error('No fields to update');
+    throw new Error("No fields to update");
   }
 
   // Always update the updated timestamp if you have one:
@@ -52,7 +41,7 @@ export const updateReviewInDB = async (
   // WHERE review id AND ownership
   const query = `
     UPDATE reviews
-    SET ${sets.join(', ')}
+    SET ${sets.join(", ")}
     WHERE id = $${idx++} AND user_id = $${idx}
     RETURNING *;
   `;
@@ -60,10 +49,6 @@ export const updateReviewInDB = async (
 
   return db.query(query, values);
 };
-
-
-
-
 
 export const deleteReviewByIdFromDB = async (
   reviewId: number,

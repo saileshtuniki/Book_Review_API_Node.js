@@ -1,10 +1,6 @@
 import db from '../config/db';
+import {Book} from '../interfaces/book.interfaces';
 
-export interface Book {
-  title: string;
-  author: string;
-  genre?: string;
-}
 
 export const createBookInDB = async (book: Book) => {
   const { title, author, genre } = book;

@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 
 import {findUserByUsername, createUser} from '../models/user.model';
 
-// const JWT_SECRET = process.env.JWT_SECRET!;
 
 export const signup = async(req: Request, res: Response): Promise<void> =>{
     const {username, password} = req.body;
