@@ -72,12 +72,133 @@ http://localhost:5000
 | DELETE | `/reviews/:id`       | Delete your own review                | ✅             |
 
 
+# 📬 Example API Requests (POSTMAN)
+
+### 🧾 Signup – Register a new user
+### Endpoint: POST /api/signup
+### Auth Required: ❌
+
+Request Body:
+
+json
+
+```
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securePassword123"
+}
+
+```
+
+```
+curl Example:
+
+curl -X POST http://localhost:5000/api/signup \
+  -H "Content-Type: application/json" \
+  -d '{"username": "vamshi", "password": "12345678"}'
+
+```
+
+
+### 🔐 Login – Get JWT Token
+
+### Endpoint: POST /api/login
+### Auth Required: ❌
+
+### Request Body:
+
+POST http://localhost:5000/api/login
+
+json
+```
+{
+  "username": "vamshi",
+  "password": "12345678"
+}
+
+```
+
+```
+
+   {"name": "vamshi", "password": "12345678"}
+
+```
+
+
+### 📚 Add a New Book
+
+### Endpoint: POST /api/books
+### Auth Required: ✅ (Bearer Token)
+
+POST http://localhost:5000/api/books
+
+
+Request Body:
+
+json
+```
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "genre": "Programming"
+}
+
+```
+
+Response body:
+```
+{
+    "id": 1,
+    "title": "The Silent Patient",
+    "author": "Alex Michaelides",
+    "genre": "Psychological Thriller",
+    "created_at": "2025-05-27T06:27:10.118Z"
+}
+```
+
+### 📚 Add Review to the book
+
+### Endpoint: POST /api/books/:id/reviews (Book id)
+### Auth Required: ✅ (Bearer Token)
+
+POST http://localhost:5000/api/books/1/reviews
+
+
+Request Body:
+
+json
+```
+{
+    "rating": 3,
+    "comment": "Nice Thriller Book"
+}
+
+```
+
+Response body:
+```
+{
+    "message": "Review created",
+    "review": {
+        "id": 3,
+        "book_id": 1,
+        "user_id": 1,
+        "rating": 3,
+        "comment": "Nice Thriller Book",
+        "created_at": "2025-05-27T06:58:35.812Z"
+    }
+}
+
+```
+
 ### 🗂️ Project Structure
 
 src/
 │
 ├── config/           # Database config
 ├── controllers/      # Request handlers
+├── interfaces/       # interfaces declaration
 ├── middleware/       # JWT middleware
 ├── models/           # DB queries and logic
 ├── routes/           # Route declarations
