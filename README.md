@@ -78,25 +78,30 @@ http://localhost:5000
 ### Endpoint: POST /api/signup
 ### Auth Required: ❌
 
-Request Body:
+POST http://localhost:5000/api/signup
+
+### Request Body:
 
 json
 
 ```
 {
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "securePassword123"
+  "name": "vamshi",
+  "password": "12345678"
 }
 
 ```
 
+Response body:
 ```
-curl Example:
 
-curl -X POST http://localhost:5000/api/signup \
-  -H "Content-Type: application/json" \
-  -d '{"username": "vamshi", "password": "12345678"}'
+ '{
+    "message": "user created",
+    "user": {
+        "id": 1,
+        "username": "vamshi"
+    }
+}'
 
 ```
 
@@ -106,9 +111,9 @@ curl -X POST http://localhost:5000/api/signup \
 ### Endpoint: POST /api/login
 ### Auth Required: ❌
 
-### Request Body:
-
 POST http://localhost:5000/api/login
+
+### Request Body:
 
 json
 ```
@@ -118,10 +123,10 @@ json
 }
 
 ```
+Response body:
 
 ```
-
-   {"name": "vamshi", "password": "12345678"}
+   {"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ94"}
 
 ```
 
@@ -133,8 +138,7 @@ json
 
 POST http://localhost:5000/api/books
 
-
-Request Body:
+### Request Body:
 
 json
 ```
@@ -165,7 +169,7 @@ Response body:
 POST http://localhost:5000/api/books/1/reviews
 
 
-Request Body:
+### Request Body:
 
 json
 ```
