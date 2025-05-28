@@ -5,12 +5,17 @@ import authRoutes from './routes/auth.routes'
 import reviewRoutes from './routes/review.routes';
 import bookRoutes from './routes/book.routes';
 
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger/swagger.json';
+
+
 dotenv.config();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/api', bookRoutes);
 app.use('/api', reviewRoutes);
